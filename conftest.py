@@ -1,7 +1,13 @@
 import pytest
+import requests
+import tests.api_tests.headers as headers
+import tests.api_tests.api_urls as urls
+import tests.api_tests.randomaizer as randomaizer
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from json import loads, dumps
+from random import randint
 
 
 def pytest_addoption(parser):
@@ -17,8 +23,8 @@ def pytest_addoption(parser):
 def driver(request):
     browser = request.config.getoption("--browser")
 
-    #geckodriver_path = "geckodriver"
-    geckodriver_path = "alexey_yakovtsov\geckodriver.exe"
+    geckodriver_path = "geckodriver"
+    #geckodriver_path = "alexey_yakovtsov\geckodriver.exe"
     chromedriver_path = "chromedriver"
     download_path = "alexey_yakovtsov/Downloads"
 
@@ -63,3 +69,40 @@ def driver(request):
 
         yield driver
         driver.quit()
+
+
+@pytest.fixture()
+def auth_token():
+    data = {
+        "username" : "admin",
+        "password" : "password123"
+    }
+
+    response = requests.post(
+                url=urls.AUTH_CREATE_TOKEN, 
+                data=dumps(data), 
+                headers=headers.HEADERS)
+
+    assert response.status_code == 200
+    assert response.json() != None
+    return response.json()["token"]
+
+
+@pytest.fixture()
+def create_booking():
+    random_data = randomaizer.RandomData()
+    random_word = random_data.generate_word(5)
+
+    data = {
+        "firstname" : random_word,
+        "lastname" : random_word,
+        "totalprice" : randint(1, 100),
+        "depositpaid" : True,
+        "bookingdates" : {
+            "checkin" : "2018-01-01",
+            "checkout" : "2019-01-01"
+        },
+        "additionalneeds" : random_word
+    }
+
+    return data

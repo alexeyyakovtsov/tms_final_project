@@ -6,6 +6,9 @@ authors = ["Alexey Yakovtsov <hannisolo@yandex.ru>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+pytest = "^6.2.4"
+selenium = "^3.141.0"
+requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
 
