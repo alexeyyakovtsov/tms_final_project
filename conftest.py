@@ -106,3 +106,27 @@ def create_booking():
     }
 
     return data
+
+
+@pytest.fixture()
+def path_update_booking():
+    random_data = randomaizer.RandomData()
+    random_word = random_data.generate_word(5)
+
+    data = {
+        "firstname" : random_word,
+        "lastname" : random_word
+    }
+
+    return data
+
+
+@pytest.fixture()
+def get_last_booking(auth_token):
+    response_get = requests.get(
+        url=urls.GET_BOOKING_IDS,
+        headers=headers.HEADERS_AUTH.update({'token': auth_token})
+    )
+
+    resp_get = response_get.json()[-1]
+    return resp_get['bookingid']
