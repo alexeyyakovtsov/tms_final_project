@@ -24,8 +24,8 @@ def driver(request):
     browser = request.config.getoption("--browser")
 
     # geckodriver_path = "geckodriver"
-    geckodriver_path = "tms_final_project\geckodriver.exe"
-    chromedriver_path = "D:\Programming\chromedriver"
+    geckodriver_path = "tms_final_project\\geckodriver.exe"
+    chromedriver_path = "d:\\Programming\\chromedriver"
 
 
     f_type = (
@@ -59,6 +59,7 @@ def driver(request):
         chrome_options = ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-setuid-sandbox")
+        chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(
             executable_path=chromedriver_path, options=chrome_options
         )

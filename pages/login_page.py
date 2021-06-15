@@ -11,6 +11,11 @@ class LoginPage(BasePage):
         user_name_field.send_keys(login)
         password_field.send_keys(password)
 
+
     def click_login_button(self):
         login_btn = self.find_element(login_page_locators.LOGIN_BUTTON)
         login_btn.click()
+
+
+    def get_error_message(self):
+        return self.get_element_title(login_page_locators.ERROR_MESSAGE)

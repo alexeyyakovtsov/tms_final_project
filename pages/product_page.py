@@ -13,9 +13,10 @@ class ProductPage(BasePage):
         select_opt = self.product_page_locators.sort_options(sort_value)
         select_opt.click()
 
-    def add_product_to_cart(self, product_element):
-        product = self.product_page_locators.add_to_card_button(product_element)
-        product.click()
+    def add_product_to_cart(self, elem):
+        locator = product_page_locators.add_to_card_button(elem)
+        element = self.find_element(locator)
+        element.click()
 
     def open_cart_page(self):
         cart_element = self.find_element(product_page_locators.SHOPING_CART_ICON)
