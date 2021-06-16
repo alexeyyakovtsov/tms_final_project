@@ -50,6 +50,7 @@ def test_update_booking(auth_token, create_booking):
     resposne = requests.put(
         url=urls.UPDATE_BOOKING.format(booking_id=randint(1, 10)),
         json=create_booking,
+        headers=headers.HEADERS,
         cookies={'token': auth_token}
     )
     assert resposne.status_code == 200
@@ -59,6 +60,7 @@ def test_partial_update_booking(auth_token, path_update_booking, get_last_bookin
     response = requests.patch(
         url=urls.PARTIAL_UPDATE_BOOKING.format(booking_id=get_last_booking),
         json=path_update_booking,
+        headers=headers.HEADERS,
         cookies={'token': auth_token}
     )
     assert response.status_code == 200

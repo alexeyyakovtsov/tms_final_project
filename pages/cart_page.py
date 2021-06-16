@@ -20,4 +20,8 @@ class CartPage(BasePage):
     
     def checkout_shopping(self):
         checkout_button = self.find_element(cart_page_locators.CHECKOUT_BUTTON)
+        self.move_to_element(checkout_button)
         checkout_button.click()
+
+    def removed_container(self):
+        return self.check_absence_element(cart_page_locators.REMOVED_ITEMS)

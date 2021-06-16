@@ -8,14 +8,16 @@ class ProductPage(BasePage):
         return self.get_element_title(product_page_locators.PAGE_TITLE)
 
     def sort_products(self, sort_value):
-        sort_select = self.find_element(product_page_locators.PRODUCT_SORT_CONAINER)
+        sort_select = self.find_element(product_page_locators.SORT_CONAINER)
         sort_select.click()
-        select_opt = self.product_page_locators.sort_options(sort_value)
-        select_opt.click()
+        select_locator = product_page_locators.sort_options(sort_value)
+        select_element = self.find_element(select_locator)
+        select_element.click()
 
     def add_product_to_cart(self, elem):
         locator = product_page_locators.add_to_card_button(elem)
         element = self.find_element(locator)
+        self.move_to_element(element)
         element.click()
 
     def open_cart_page(self):
