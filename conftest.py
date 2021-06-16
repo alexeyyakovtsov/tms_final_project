@@ -6,6 +6,8 @@ import tests.api_tests.randomaizer as randomaizer
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from json import loads, dumps
 from random import randint
 
@@ -23,9 +25,10 @@ def pytest_addoption(parser):
 def driver(request):
     browser = request.config.getoption("--browser")
 
-    # geckodriver_path = "geckodriver"
-    geckodriver_path = "tms_final_project\\geckodriver.exe"
-    chromedriver_path = "d:\\Programming\\chromedriver"
+    #geckodriver_path = "geckodriver"
+    #geckodriver_path = "tms_final_project\\geckodriver.exe"
+    #chromedriver_path = "d:\\Programming\\chromedriver"
+    #chromedriver_path = "chromedriver"
 
 
     f_type = (
@@ -47,9 +50,11 @@ def driver(request):
         profile.set_preference("browser.download.useDownloadDir", True)
         profile.set_preference("pdfjs.disabled", True)
         profile.set_preference("browser.helperApps.neverAsk.saveToDisk", f_type)
-        driver = webdriver.Firefox(
+        """driver = webdriver.Firefox(
             profile, executable_path=geckodriver_path, options=options
-        )
+        )"""
+
+        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=options)
         driver.maximize_window()
 
         yield driver
@@ -60,9 +65,10 @@ def driver(request):
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-setuid-sandbox")
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        driver = webdriver.Chrome(
-            executable_path=chromedriver_path, options=chrome_options
-        )
+        #driver = webdriver.Chrome(
+            #executable_path=chromedriver_path, options=chrome_options
+        #)
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
         driver.maximize_window()
 
         yield driver
