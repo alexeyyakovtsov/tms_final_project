@@ -75,7 +75,6 @@ def test_case_one(driver):
     complete_header = complete_page.get_complete_header()
     assert complete_header in COMPLETE_TEXT
     complete_page.back_to_home()
-    #--------------------------
 
 
 def test_case_two(driver):
