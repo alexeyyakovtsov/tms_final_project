@@ -18,3 +18,7 @@ def add_to_card_button(elem):
 
 def sort_options(sort_value):
     return (By.XPATH, f'//option[contains(., "{sort_value}")]')
+
+
+def get_item_menu(name):
+    return (By.XPATH, f'//a[@class="bm-item menu-item"][contains(.,"{name}")]')

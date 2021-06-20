@@ -24,3 +24,10 @@ class OverViewPage(BasePage):
     def finish_card_registration(self):
         finish_button = self.find_element(overview_page_locators.FINISH_BUTTON)
         finish_button.click()
+
+
+    def check_total_price(self):
+        subtotal_price = self.get_subtotal_price().replace('Item total: $', '')
+        tax_price = self.get_tax_price().replace('Tax: $', '')
+        total_price = self.get_total_price().replace('Total: $', '')
+        assert float(subtotal_price) + float(tax_price) == float(total_price)

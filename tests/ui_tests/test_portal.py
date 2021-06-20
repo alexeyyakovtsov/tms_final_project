@@ -65,10 +65,7 @@ def test_case_one(driver):
     overview_product_price = overview_page.get_product_price('$29.99')
     assert PRODUCT_NAME in overview_product_title
     assert '$29.99' in overview_product_price
-    subtotal_price = overview_page.get_subtotal_price()
-    tax_price = overview_page.get_tax_price()
-    total_price = overview_page.get_total_price()
-    assert (float(subtotal_price.replace('Item total: $', '')) + float(tax_price.replace('Tax: $', ''))) == float(total_price.replace('Total: $', ''))
+    overview_page.check_total_price()
     overview_page.finish_card_registration()
     complete_page_title = product_page.get_page_title()
     assert COMPLETE_TITLE.upper() in complete_page_title
@@ -124,10 +121,7 @@ def test_case_two(driver):
     assert OVERVIEW_TITLE.upper() in overview_page_title
     overview_product_price = overview_page.get_product_price('$7.99')
     assert '$7.99' in overview_product_price
-    subtotal_price = overview_page.get_subtotal_price()
-    tax_price = overview_page.get_tax_price()
-    total_price = overview_page.get_total_price()
-    assert (float(subtotal_price.replace('Item total: $', '')) + float(tax_price.replace('Tax: $', ''))) == float(total_price.replace('Total: $', ''))
+    overview_page.check_total_price()
     overview_page.finish_card_registration()
     complete_page_title = product_page.get_page_title()
     assert COMPLETE_TITLE.upper() in complete_page_title
@@ -227,10 +221,7 @@ def test_case_five(driver):
     confirm_page.confirm_information_form()
     overview_page_title = product_page.get_page_title()
     assert OVERVIEW_TITLE.upper() in overview_page_title
-    subtotal_price = overview_page.get_subtotal_price()
-    tax_price = overview_page.get_tax_price()
-    total_price = overview_page.get_total_price()
-    assert (float(subtotal_price.replace('Item total: $', '')) + float(tax_price.replace('Tax: $', ''))) == float(total_price.replace('Total: $', ''))
+    overview_page.check_total_price()
     overview_page.finish_card_registration()
     complete_page_title = product_page.get_page_title()
     assert COMPLETE_TITLE.upper() in complete_page_title
@@ -238,3 +229,27 @@ def test_case_five(driver):
     assert complete_header in COMPLETE_TEXT
     complete_page.back_to_home()
     
+
+def test_case_six(driver):
+    """
+    Тест 6
+    1. Авторизоваться на портале
+    2. Открыть бургер-меню
+    3. Кликнуть на кнопку Logout
+    4. Проверить что пользователь перенаправлен на страницу авторизации
+    """
+
+    login_page = LoginPage(driver)
+    product_page = ProductPage(driver)
+
+    driver.get('https://www.saucedemo.com/')
+    assert driver.current_url == 'https://www.saucedemo.com/'
+    login_page.enter_credantials('standard_user', 'secret_sauce')
+    login_page.click_login_button()
+    assert driver.current_url == 'https://www.saucedemo.com/inventory.html'
+    page_title = product_page.get_page_title()
+    assert PAGE_TITLE.upper() in page_title
+    product_page.open_menu()
+    time.sleep(0.5)
+    product_page.choose_menu_item('Logout')
+    assert driver.current_url == 'https://www.saucedemo.com/'
