@@ -30,7 +30,7 @@ def test_get_booking_ids(auth_token):
 
 def test_get_booking_id(auth_token):
     response = requests.get(
-        url=urls.GET_BOOKING_ID.format(booking_id=1),
+        url=urls.GET_BOOKING_ID.format(booking_id=randint(1, 20)),
         headers=headers.HEADERS_AUTH.update({'token': auth_token})
     )
     assert response.status_code == 200
