@@ -93,7 +93,6 @@ def driver(request):
     elif browser == 'selenoid_chrome':
         capabilities = {
             "browserName": "chrome",
-            "browserVersion": "90.0",
             "selenoid:options": {
                 "enableVNC": True,
                 "enableVideo": False
