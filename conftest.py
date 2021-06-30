@@ -25,20 +25,6 @@ def pytest_addoption(parser):
 def driver(request):
     browser = request.config.getoption("--browser")
 
-    #geckodriver_path = "tms_final_project\\geckodriver.exe"
-    #chromedriver_path = "d:\\Programming\\chromedriver"
-
-
-    f_type = (
-        "application/pdf"
-        "vnd.ms-excel,"
-        "application/vnd.ms-excel.addin.macroenabled.12,"
-        "application/vnd.ms-excel.template.macroenabled.12,"
-        "application/vnd.ms-excel.template.macapplication/vnd.ms-excel.sheet.binaryroenabled.12,"
-        "application/vnd.ms-excel.sheet.macroenabled.12,"
-        "application/octet-stream"
-    )
-
     if browser == "firefox":
         options = FirefoxOptions()
         profile = webdriver.FirefoxProfile()
@@ -47,10 +33,6 @@ def driver(request):
         profile.set_preference("browser.helperApps.alwaysAsk.force", False)
         profile.set_preference("browser.download.useDownloadDir", True)
         profile.set_preference("pdfjs.disabled", True)
-        profile.set_preference("browser.helperApps.neverAsk.saveToDisk", f_type)
-        # driver = webdriver.Firefox(
-        #     profile, executable_path=geckodriver_path, options=options
-        # )
 
         driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=options)
         driver.maximize_window()
@@ -63,9 +45,6 @@ def driver(request):
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-setuid-sandbox")
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        # driver = webdriver.Chrome(
-        #     executable_path=chromedriver_path, options=chrome_options
-        # )
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
         driver.maximize_window()
 
@@ -75,7 +54,7 @@ def driver(request):
     elif browser == 'selenoid_firefox':
         capabilities = {
             "browserName": "firefox",
-            "browserVersion": "",
+            "browserVersion": "63.0",
             "selenoid:options": {
                 "enableVNC": True,
                 "enableVideo": False
@@ -93,7 +72,7 @@ def driver(request):
     elif browser == 'selenoid_chrome':
         capabilities = {
             "browserName": "chrome",
-            "browserVersion": "90.0",
+            "browserVersion": "66.0",
             "selenoid:options": {
                 "enableVNC": True,
                 "enableVideo": False
