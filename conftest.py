@@ -80,7 +80,7 @@ def driver(request):
         }
 
         driver = webdriver.Remote(
-            command_executor="http://selenoid:4444/wd/hub",
+            command_executor="http://host.docker.internal:4444/wd/hub",
             desired_capabilities=capabilities)
 
         driver.maximize_window()
