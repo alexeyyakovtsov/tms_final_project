@@ -75,7 +75,7 @@ def driver(request):
             "browserVersion": "66.0",
             "selenoid:options": {
                 "enableVNC": True,
-                "enableVideo": True
+                "enableVideo": False
             }
         }
 
