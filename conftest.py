@@ -101,7 +101,6 @@ def auth_token():
         headers=headers.HEADERS)
 
     assert response.status_code == 200
-    assert response.json() is not None
     return response.json()["token"]
 
 

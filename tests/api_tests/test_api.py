@@ -17,7 +17,6 @@ def test_get_token():
                 headers=headers.HEADERS
     )
     assert response.status_code == 200
-    assert response.json() != None
     
 
 def test_get_booking_ids(auth_token):
